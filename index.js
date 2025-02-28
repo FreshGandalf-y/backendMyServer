@@ -14,16 +14,46 @@ wss.on("connection", ws => {
     console.log("New client connected!");
 
     ws.on("message", async function (message) {
+        
         try {
             const data = JSON.parse(message);
-            console.log("Daten schon ge-parse", data)
-            await axios.post('http://localhost:5002/save', data);
-            ws.send("data saved in python-backend")
+            console.log('recived message', data);
 
+            if (data.type === 'getContentDashbord') {
+                const isAutorized = true;
+
+                if (isAutorized) {
+                    fs.readFile('dashbordFrontend.html', 'utf8', (err, fileData) => {
+                        if (err) {
+                            console.error('Fehler beim Laden der Datei:', err);
+                            ws.send({ type: 'error', message: 'mistake by loading File'});
+                        } else {
+                            ws.send(JSON.stringify({type: 'contant', html: fileData}));
+                            console.log("Dashbord send")
+                            
+                        }
+                    })
+                } else {
+                    ws.send(JSON.stringify({type: 'error', message: 'no permittion'}))
+                } 
+
+            } else if (data.type === 'chatmessage') {
+                try {
+                    
+                    console.log("data parsed", data)
+                    //await axios.post('http://localhost:5002/save', data);
+                    ws.send(JSON.stringify({type: 'chatResponse', data: data}))
+    
+                } catch (error) {
+                    console.error("mistake:", error);
+                }
+
+            }
+
+           
         } catch (error) {
-            console.error("mistake:", error);
+            
         }
-        
         /*try {
             const data = JSON.parse(message);
             

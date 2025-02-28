@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 import mysql.connector
 app = Flask (__name__)
+import datetime 
 
 db = mysql.connector.connect(
     host="localhost",
@@ -9,20 +10,28 @@ db = mysql.connector.connect(
     database="chatchronic"
 )
 
-id = int
+idCommand = 1
 
 @app.route('/save', methods=['Post'])
 def save_data():
     data = request.json
     username = data.get('myusrName')
     lastcommand = data.get('theLastCommand')
+    usrtime = data.get('datetime')
+    timeserver = datetime.datetime.now()
 
 
-    print(username, lastcommand)
+    print(username, lastcommand, usrtime, timeserver)
 
     my_coursor = db.cursor()
-    sql = "INSERRT INTO last_command (id, username, time, Null, lastcommand) VALUES (%s, %s)"
-    my_coursor.execute(sql)
+    sql = "INSERT INTO last_commands (id, username, time, timeserver, lastcommand) VALUES (%s, %s)"
+
+    val = [
+        (idCommand, username, usrtime, timeserver, lastcommand),
+    ]
+
+    my_coursor.executemany(sql, val)
+
     db.commit() 
     my_coursor.close()
 
