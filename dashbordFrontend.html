@@ -1,1 +1,63 @@
-<h1>Succes! your personal Dashbord 😂</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body onload="specs(), Cpus()">
+    <div class="Specs" id="specs" style="width: 96.5%; height: 80px; background-image: linear-gradient(to right, #8db7b7, #c65353); border-radius: 10px; border-style: dashed; border-width: 2px; display: flex; align-items: baseline; justify-content: left; padding: 10px; margin: 10px;">
+        <div>
+            <a>ip-Addres Server: <span style="color: #c65353;" id="ipaddres"></span></a> <br>
+            <a>dns-Name: <span style="color: #c65353;" id="dnsinfos"></span></a>
+        </div>
+    </div>
+    
+    <div id="cpuUsage" style=" width: 96.5%; height: auto; background-image: linear-gradient(to right, #8db7b7, #c65353); border-radius: 10px; border-style: dashed; border-width: 2px; padding: 10px; margin: 10px;">
+        <div style="float: both; margin-bottom: -15px;"> Cpu1: <span style="color: #c65353;" id="cpu1"></span></div> <br>
+        <div style="float: both; margin-bottom: -15px;"> Cpu2: <span style="color: #c65353;" id="cpu2"></span></div> <br>
+        <div style="float: both; margin-bottom: -15px;"> Cpu3: <span style="color: #c65353;" id="cpu3"></span></div> <br>
+        <div style="float: both; margin-bottom: -15px;"> Cpu4: <span style="color: #c65353;" id="cpu4"></span></div> <br>
+    </div>
+    <a > "no websocket html"</a>
+    <script>
+        const ws = new WebSocket("ws://localhost:8082")
+    
+        ws.onopen = function () {
+            console.log("we are connected(dashbord)");
+        };
+    
+        ws.onmessage = function (event) {
+            const data = JSON.parse(event.data)
+    
+            if (data.type === "CpuUsage") {
+                console.log("cpudata recived")
+                for (const cpu in data.cpus) {
+                    if (document.getElementById(cpu)) {
+                        let value = data.cpus[cpu];
+                        let dashes = "-".repeat(value)
+                        document.getElementById(cpu).innerHTML = ` ${dashes}`;
+                    }
+                    
+                }
+            } else if (data.type === "") {
+    
+            }
+        }; 
+        function specs() {
+            document.getElementById("ipaddres").innerHTML = "192.168.8.243";
+            document.getElementById("dnsinfos").innerHTML = "idk.local"
+        }
+    
+        function Cpus() {
+            if (ws.readyState === WebSocket.OPEN) {
+                ws.send(JSON.stringify({type: "CpuUsage"}));
+            } else {
+                ws.addEventListener('open', () => {
+                    ws.send(JSON.stringify({type: "CpuUsage"}));
+                });
+            };
+        }
+    
+    </script>
+</body>
+</html>

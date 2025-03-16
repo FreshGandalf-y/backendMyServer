@@ -1,0 +1,11 @@
+{
+    "Desktops": [
+        {"title": "Something with Arch","Picture": "pictures/somethingwithArch.jpeg", "username": "anonymos", "userPicture": "pictures/WhatsApp_Béla.jpeg", "operationSythem": "Arch-Linux", "desktopEnvironment": "KDE"},
+        {"title": "Endevour OS","Picture": "pictures/Bildschirmfoto_Desktop_Arch.png", "username": "Béla", "userPicture": "pictures/WhatsApp_Béla.jpeg", "operationSythem": "Endevour OS", "desktopEnvironment": "gnome"},
+        {"title": "Nix Os","Picture": "pictures/somethinLinux.jpg", "username": "anonymos", "userPicture": "pictures/WhatsApp_Béla.jpeg", "operationSythem": "Nix Os", "desktopEnvironment": "idk"},
+        {"title": "Nix Os","Picture": "pictures/somethinLinux.jpg", "username": "anonymos", "userPicture": "pictures/WhatsApp_Béla.jpeg", "operationSythem": "Nix Os", "desktopEnvironment": "idk"},
+        {"title": "Nix Os","Picture": "pictures/somethinLinux.jpg", "username": "anonymos", "userPicture": "pictures/WhatsApp_Béla.jpeg", "operationSythem": "Nix Os", "desktopEnvironment": "idk"},
+        {"title": "Nix Os","Picture": "pictures/somethinLinux.jpg", "username": "anonymos", "userPicture": "pictures/WhatsApp_Béla.jpeg", "operationSythem": "Nix Os", "desktopEnvironment": "idk"}
+        
+    ]
+}
